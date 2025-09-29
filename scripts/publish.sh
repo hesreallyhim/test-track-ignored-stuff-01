@@ -51,9 +51,16 @@ fi
 REMOTE_NAME="public-tmp"
 git remote add "${REMOTE_NAME}" "${PUBLIC_URL}"
 
+# Prime lease state so --force-with-lease has the remote-tracking refs it needs
+git fetch "${REMOTE_NAME}" --prune
+
 for br in ${PUBLIC_BRANCHES}; do
   if git show-ref --quiet --heads "refs/heads/${br}"; then
+  if [[ "${PUSH_FORCE:-0}" == "1" ]]; then
+    git push "${REMOTE_NAME}" "${br}:${br}" --force
+  else
     git push "${REMOTE_NAME}" "${br}:${br}" --force-with-lease
+  fi
   else
     echo "Skip: branch '${br}' not found in export"
   fi
