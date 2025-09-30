@@ -4,7 +4,7 @@
 SHELL := /bin/bash
 
 # Defaults (override at invocation: make publish PUBLIC_BRANCHES="main release/v1")
-PUBLIC_REMOTE ?= origin origin-public
+PUBLIC_REMOTE ?= origin-public
 PUBLIC_BRANCHES ?= main
 INTERNAL_REMOTE ?= origin-internal
 INTERNAL_BRANCH ?= dev-internal
